@@ -14,7 +14,11 @@ void BulletManager::Fire(float2 pos, float2 dir, float speed, float time, float 
 
 void BulletManager::Update(float time)
 {
-	
+	cout << "time " <<time<< endl;
+	//cout << "life_time " <<bullets.at(0)->getLifeTime()<< endl;
+	cout << "size bullets " << bullets.size() << endl;
+	if (!bullets.empty() && !walls.empty())
+	{
 		for (unsigned int i = 0; i < walls.size(); ++i)
 			for (unsigned int j = 0; j < bullets.size(); ++j)
 			{
@@ -30,14 +34,29 @@ void BulletManager::Update(float time)
 						{
 							cout << "Near the wall" << endl;
 							bullets.at(j)->Richochet(walls.at(i), bullets.at(j)->getBullet());
-							cout << "ricosheted to pos" <<bullets.at(j)->getDirX()<<" "<< bullets.at(j)->getDirY()<< endl;
+							cout << "ricosheted to pos" << bullets.at(j)->getDirX() << " " << bullets.at(j)->getDirY() << endl;
 							bullets.erase(bullets.begin() + j);
 							vector<Bullet*>(bullets).swap(bullets);
-							cout << "deleted" << endl;
+							cout << "deleted bullet " << endl;
+							walls.erase(walls.begin() + i);
+							vector<Wall*>(walls).swap(walls);
+							cout << "deleted wall " << endl;
+							for (unsigned int i = 0; i < walls.size(); ++i)
+							{
+								cout << walls.at(i)->getStartX() << " " << walls.at(i)->getStartY() << endl;
+							}
 						}
+					}
+					else
+					{
+						bullets.erase(bullets.begin() + j);
+						vector<Bullet*>(bullets).swap(bullets);
+						cout << "life_end" << endl;
 					}
 				}
 			}
+	}
+	else cout << "no bullets " << endl;
 }
 
 bool BulletManager::isIntersect(Wall *wall, float2 bullet)

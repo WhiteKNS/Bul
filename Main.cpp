@@ -7,6 +7,7 @@
 #include "float2.h"
 #include <vector>
 #include <conio.h>
+#include <Windows.h>
 
 using namespace std;
 
@@ -14,6 +15,7 @@ using namespace std;
 int main()
 {
 	float2 point(30, 0);
+	float2 point2(60, 80);
 	float2 dir(1, 4);
 	//Bullet *bullet = new Bullet(point);
 	vector<Wall*>walls;
@@ -39,8 +41,14 @@ int main()
 	BulletManager *manager = new BulletManager(walls);
 
 	manager->Fire(point, dir, 1.0f, 0.1f, 6.0f);
-	manager->Update(0);
-
+	manager->Fire(point2, dir, 3.0f, 1.0f, 6.0f);
+	//while(true)
+	float time = 0.0f;
+	while (true)
+	{
+		manager->Update(time++);
+		Sleep(1000);
+	}
 	delete manager;
 	/*
 	for (unsigned int i = 0; i < walls.size(); ++i)
