@@ -17,17 +17,13 @@ class BulletManager
 	vector <Wall*> walls;
 	vector <Bullet*> bullets;
 
-	const float getAngle(Wall *wall, float2 bullet);
-
-	//float life_time;
+	bool isIntersect(Wall *wall, float2 bullet);
+	bool NearTheWall(Wall *wall, float2 bullet);
 
 public:
 
 	BulletManager(vector <Wall*> walls);
 	~BulletManager();
-
-	bool isIntersect(Wall *wall, float2 bullet);
-	bool NearTheWall(Wall *wall, float2 bullet);
 
 	void Update(float time);
 	void Fire(float2 pos, float2 dir, float speed, float time, float life_time);

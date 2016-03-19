@@ -1,5 +1,6 @@
 #pragma once
 #include "float2.h"
+#include "Wall.h"
 
 class Bullet
 {
@@ -11,6 +12,7 @@ class Bullet
 
 	float cos_angle;
 	float sin_angle;
+
 
 public:
 
@@ -25,6 +27,9 @@ public:
 	void SetBullet(float2 bullet);
 	float2 getBullet();
 	float2 getCurrentPosition(float cur_time);
+	float2 Richochet(Wall *wall, float2 bullet);
+	float getDirX();
+	float getDirY();
 
 	const float getLifeTime();
 };

@@ -53,3 +53,25 @@ const float Bullet::getLifeTime()
 	return life_time;
 }
 
+float2 Bullet::Richochet(Wall *wall, float2 bullet)
+{
+	float wall_length = float2::getLength(wall->getStart(), wall->getEnd());
+	float left_length = float2::getLength(wall->getStart(), bullet);
+	float right_length = float2::getLength(wall->getEnd(), bullet);
+	//the angle between the the wall and the bullet
+	float angle = (powf(wall_length, 2) - powf(left_length, 2) + powf(right_length, 2)) / (2 * wall_length*right_length);
+	dir.setX(-(dir.getX()*cos(180 - angle) - dir.getY()*cos(180 - angle))); //new direction (the reflection of the angle)
+	dir.setY(-(dir.getX()*cos(180 - angle) + dir.getY()*cos(180 - angle)));
+	return dir;
+}
+
+
+float Bullet::getDirX()
+{
+	return dir.getX();
+}
+
+float Bullet::getDirY()
+{
+	return dir.getY();
+}

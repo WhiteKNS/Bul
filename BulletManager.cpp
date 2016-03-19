@@ -29,7 +29,11 @@ void BulletManager::Update(float time)
 						if (NearTheWall((walls.at(i)), bullets.at(j)->getCurrentPosition(time)))
 						{
 							cout << "Near the wall" << endl;
-							cout << "ricosheted " << endl;
+							bullets.at(j)->Richochet(walls.at(i), bullets.at(j)->getBullet());
+							cout << "ricosheted to pos" <<bullets.at(j)->getDirX()<<" "<< bullets.at(j)->getDirY()<< endl;
+							bullets.erase(bullets.begin() + j);
+							vector<Bullet*>(bullets).swap(bullets);
+							cout << "deleted" << endl;
 						}
 					}
 				}
@@ -54,11 +58,6 @@ bool BulletManager::NearTheWall(Wall *wall, float2 bullet)
 }
 
 
-const float BulletManager::getAngle(Wall *wall, float2 bullet)
-{
-	float wall_length = float2::getLength(wall->getStart(), wall->getEnd());
-	float left_length = float2::getLength(wall->getStart(), bullet);
-	float right_length = float2::getLength(wall->getEnd(), bullet);
 
-	return (powf(wall_length, 2) - powf(left_length, 2) + powf(right_length, 2)) / (2 * wall_length*right_length);
-}
+
+

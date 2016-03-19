@@ -41,6 +41,7 @@ int main()
 	manager->Fire(point, dir, 1.0f, 0.1f, 6.0f);
 	manager->Update(0);
 
+	delete manager;
 	/*
 	for (unsigned int i = 0; i < walls.size(); ++i)
 		for (unsigned int j = 0; j < bullets.size(); ++j)
