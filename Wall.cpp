@@ -7,17 +7,17 @@ Wall::Wall(float2 *start_point, float2 *end_point):start_point(start_point), end
 
 Wall::~Wall() {}
 
-/*
+
 float2 Wall::getStart()
 {
-	return start_point;
+	return *start_point;
 }
 
 float2 Wall::getEnd()
 {
-	return end_point;
+	return *end_point;
 }
-*/
+
 float Wall::getStartX()
 {
 	return start_point->getX();

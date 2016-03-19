@@ -38,8 +38,8 @@ int main()
 	*/
 	BulletManager *manager = new BulletManager(walls);
 
-	manager->Fire(point, dir, 1.0f, 0.0f, 6.0f);
-	manager->Update(1.0f);
+	manager->Fire(point, dir, 1.0f, 0.1f, 6.0f);
+	manager->Update(0);
 
 	/*
 	for (unsigned int i = 0; i < walls.size(); ++i)

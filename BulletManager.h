@@ -8,6 +8,8 @@
 #include <iostream>
 #include <cmath>
 
+#define COLLISION 0.1
+
 using namespace std;
 
 class BulletManager
@@ -15,14 +17,18 @@ class BulletManager
 	vector <Wall*> walls;
 	vector <Bullet*> bullets;
 
+	const float getAngle(Wall *wall, float2 bullet);
 
+	//float life_time;
 
 public:
 
 	BulletManager(vector <Wall*> walls);
 	~BulletManager();
 
-	static bool isIntersect(Wall *wall, float2 bullet);
+	bool isIntersect(Wall *wall, float2 bullet);
+	bool NearTheWall(Wall *wall, float2 bullet);
+
 	void Update(float time);
 	void Fire(float2 pos, float2 dir, float speed, float time, float life_time);
 };
