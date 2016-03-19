@@ -16,7 +16,17 @@ float float2::getY()
 	return Y;
 }
 
-float2& float2::operator+(const float2& rv)
+float2& float2::operator+(const float2& cord)
 {
-	return float2(X + rv.X, Y + rv.Y);
+	return float2(X + cord.X, Y + cord.Y);
+}
+
+void float2::setX(float X)
+{
+	this->X = X;
+}
+
+void float2::setY(float Y)
+{
+	this->Y = Y;
 }

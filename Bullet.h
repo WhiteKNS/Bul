@@ -9,9 +9,11 @@ class Bullet
 	float time;
 	float life_time;
 
+
 public:
 
 	Bullet(float2 pos);
+	Bullet(float X, float Y);
 	Bullet(float2 pos, float2  dir,float speed,float time, float life_time);
 	~Bullet();
 

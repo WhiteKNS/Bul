@@ -6,6 +6,7 @@
 #include "Wall.h"
 #include "float2.h"
 #include <vector>
+#include <conio.h>
 
 using namespace std;
 
@@ -13,18 +14,42 @@ using namespace std;
 int main()
 {
 	float2 point(30, 0);
-	Bullet *bullet = new Bullet(point);
+	float2 dir(1, 4);
+	//Bullet *bullet = new Bullet(point);
 	vector<Wall*>walls;
+	vector<Bullet*>bullets;
+	//bullets.push_back(new Bullet(point));
 	walls.push_back(new Wall(new float2(0, 0), new float2(0,100)));
 	walls.push_back(new Wall(new float2(0, 100), new float2(100, 100)));
 	walls.push_back(new Wall(new float2(100, 100), new float2(100, 0)));
 	walls.push_back(new Wall(new float2(100, 0), new float2(0, 0)));
-	//Wall wall(pos1, pos2);
+/*
+	if (_kbhit())
+	{
+		switch (_getch())
+		{
+		case '1': 
+			
+			bullets.push_back(new Bullet(point_shoot));
+			break;
+		default: break;
+		}
+	}
+	*/
+	BulletManager *manager = new BulletManager(walls);
 
+	manager->Fire(point, dir, 1.0f, 0.0f, 6.0f);
+	manager->Update(1.0f);
 
+	/*
 	for (unsigned int i = 0; i < walls.size(); ++i)
-	BulletManager::isIntersect(walls.at(i), bullet->getBullet());
-
+		for (unsigned int j = 0; j < bullets.size(); ++j)
+		{
+			{
+				BulletManager::isIntersect(walls.at(i), bullets.at(j)->getBullet());
+			}
+		}
+		*/
 	return 0;
 }
 

@@ -12,14 +12,14 @@ using namespace std;
 
 class BulletManager
 {
-	vector <Wall> walls;
+	vector <Wall*> walls;
 	vector <Bullet*> bullets;
 
 
 
 public:
 
-	BulletManager(vector <Wall> walls);
+	BulletManager(vector <Wall*> walls);
 	~BulletManager();
 
 	static bool isIntersect(Wall *wall, float2 bullet);

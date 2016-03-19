@@ -15,4 +15,7 @@ public:
 
 	float getX();
 	float getY();
+
+	void setX(float X);
+	void setY(float Y);
 };
