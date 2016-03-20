@@ -5,6 +5,7 @@
 #include "float2.h"
 #include "Wall.h"
 #include <vector>
+#include <list>
 #include <iostream>
 #include <cmath>
 
@@ -14,7 +15,7 @@ using namespace std;
 
 class BulletManager
 {
-	vector <Wall*> walls;
+	list<Wall*> walls;
 	vector <Bullet*> bullets;
 
 	bool isIntersect(Wall *wall, float2 bullet);
@@ -22,7 +23,9 @@ class BulletManager
 
 public:
 
-	BulletManager(vector <Wall*> walls);
+	bool Over;
+
+	BulletManager(list <Wall*> walls);
 	~BulletManager();
 
 	void Update(float time);

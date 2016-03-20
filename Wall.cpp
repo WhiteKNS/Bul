@@ -5,7 +5,11 @@ Wall::Wall(float2 *start_point, float2 *end_point):start_point(start_point), end
 	
 };
 
-Wall::~Wall() {}
+Wall::~Wall()
+{
+	delete start_point;
+	delete end_point;
+}
 
 
 float2 Wall::getStart()

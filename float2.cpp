@@ -33,5 +33,6 @@ void float2::setY(float Y)
 
 const float float2::getLength(float2 first_point, float2 second_point)
 {
-	return sqrt(powf(first_point.getX() - second_point.getX(), 2) + powf(first_point.getY() - second_point.getY(), 2));
+	return hypot(first_point.getX() - second_point.getX(), first_point.getY() - second_point.getY());
+	//return sqrt(powf(first_point.getX() - second_point.getX(), 2) + powf(first_point.getY() - second_point.getY(), 2));
 }

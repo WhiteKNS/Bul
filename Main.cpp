@@ -6,59 +6,57 @@
 #include "Wall.h"
 #include "float2.h"
 #include <vector>
-#include <conio.h>
+#include <list>
+#include <ctime>
 #include <Windows.h>
 
 using namespace std;
 
-void FuncThread(BulletManager &man, float2 &pos, float2 &dir)
+void FuncThread(BulletManager &man, float2 &pos, float2 &dir, float speed, float time, float life_time )
 {
-	//float2 point(30, 0);
-	//float2 point2(60, 80);
-	//float2 dir(1, 4);
-	//float speed = (10.0f * rand()) / RAND_MAX,
-		float time = (5.0f * rand()) / RAND_MAX,
-		time_life= (30.0f * rand()) / RAND_MAX;
-	man.Fire(pos, dir, 1.0f, time, time_life);
+	man.Fire(pos, dir, speed, time, life_time);
+}
+
+void Randomization(float &speed, float &time, float &life_time)
+{
+		speed = (10.0f * rand()) / RAND_MAX,
+		time = (5.0f * rand()) / RAND_MAX,
+		life_time = (30.0f * rand()) / RAND_MAX+ 10.0f;
 }
 
 int main()
 {
-	//float2 point(30, 0);
-	float2 point2(60, 80);
-	//float2 dir(1, 4);
-	//Bullet *bullet = new Bullet(point);
-	vector<Wall*>walls;
-	//vector<Bullet*>bullets;
-	//bullets.push_back(new Bullet(point));
-	walls.push_back(new Wall(new float2(0, 0), new float2(0,100)));
-	walls.push_back(new Wall(new float2(0, 100), new float2(100, 100)));
-	walls.push_back(new Wall(new float2(100, 100), new float2(100, 0)));
-	walls.push_back(new Wall(new float2(100, 0), new float2(0, 0)));
+	srand((unsigned)time(NULL));
+	
+	list<Wall*>walls;
+	for (unsigned int i = 0; i < 20; ++i)
+	{
+		walls.push_back(new Wall(new float2((100.0f * rand()) / RAND_MAX, (100.0f * rand()) / RAND_MAX), new float2((100.0f * rand()) / RAND_MAX, (100.0f * rand()) / RAND_MAX)));
+	}
 
 	vector<thread> threads;
 
 	BulletManager manager(walls); 
 
-	for (unsigned int i = 0; i < 5; ++i)
+	for (unsigned int i = 0; i < 25; ++i)
 	{
 		float2 point((100.0f * rand()) / RAND_MAX, (100.0f * rand()) / RAND_MAX);
-		//cout << "point created " << point.getX() << " " << point.getY() << endl;
-		float2 dir((100.0f * rand()) / RAND_MAX, (100.0f * rand()) / RAND_MAX);
-	//	cout << "dir created " << dir.getX() << " " << dir.getY() << endl;
-		threads.push_back(thread(FuncThread, ref(manager), ref(point), ref(dir)));
+		float2 dir((3.0f * rand()) / RAND_MAX, (4.0f * rand()) / RAND_MAX);
+		float speed, time, life_time;
+		Randomization(speed, time, life_time);
+		threads.push_back(thread(FuncThread, ref(manager), ref(point), ref(dir), ref(speed), ref(time), ref(life_time)));
 	}
-	std::cout << "synchronizing all threads...\n";
-	for (auto& th : threads) th.join();
-	//manager->Fire(point, dir, 1.0f, 0.1f, 6.0f);
-	//manager->Fire(point2, dir, 3.0f, 1.0f, 6.0f);
+	
 
-	float time = 0.0f;
+	for (auto& th : threads) th.join();
+
+	float timer = 1.0f;
 	while (true)
 	{
-		manager.Update(time++);
+		manager.Update(timer++);
 
-		Sleep(1000);
+		Sleep(10);
+		if (manager.Over) break;
 	}
 
 	return 0;

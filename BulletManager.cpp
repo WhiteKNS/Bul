@@ -1,74 +1,92 @@
 #include "BulletManager.h"
 #include <mutex>
+#include <Windows.h>
 
 mutex g_lock;
 
-BulletManager::BulletManager(vector<Wall*> walls) : walls(walls) {}
+BulletManager::BulletManager(list <Wall*> walls) : walls(walls) {}
 
 BulletManager::~BulletManager() 
 {
-	bullets.clear();
+	
+	for (vector <Bullet*> ::iterator iter = bullets.begin(); iter != bullets.end(); ++iter)
+	{
+		delete *iter;
+	}
+	for (list <Wall*> ::iterator iter = walls.begin(); iter != walls.end(); ++iter)
+	{
+		delete *iter;
+	}
 }
 
 void BulletManager::Fire(float2 pos, float2 dir, float speed, float time, float life_time)
 {
 	g_lock.lock();
+	//cout << "speed" << speed << " time " << time << " life time" << life_time << endl;
 	bullets.push_back(new Bullet(pos, dir, speed, time, life_time));
-	cout << "entered thread " << this_thread::get_id() << endl;
+	//cout << "entered thread " << this_thread::get_id() << endl;
 	//this_thread::sleep_for(chrono::seconds(rand() % 10));
-	cout << "leaving thread " << this_thread::get_id() << endl;
+	//cout << "leaving thread " << this_thread::get_id() << endl;
 	g_lock.unlock();
 }
 
 void BulletManager::Update(float time)
 {
-	cout << "time " <<time<< endl;
-	//cout << "life_time " <<bullets.at(0)->getLifeTime()<< endl;
-
+	Over = false;
 	g_lock.lock();
-	cout << "entered thread " << this_thread::get_id() << std::endl;
-	cout << "size bullets " << bullets.size() << endl;
+
 	if (!bullets.empty() && !walls.empty())
 	{
-		for (unsigned int i = 0; i < walls.size(); ++i)
+		for (list<Wall*>::iterator i = walls.begin(); i != walls.end(); i++)
+		{
 			for (unsigned int j = 0; j < bullets.size(); ++j)
 			{
 				{
+					//cout << walls.size() << " " << bullets.size() << " i " << i << " j " << j << endl;
 					if (time < bullets.at(j)->getLifeTime())
 					{
-						if (isIntersect(walls.at(i), bullets.at(j)->getCurrentPosition(time)))
+						
+						if (NearTheWall((*i), bullets.at(j)->getCurrentPosition(time)))
+
 						{
-							cout << "bullet collision with the walls " << endl << "bullet with pos " << bullets.at(j)->getX() << " " << bullets.at(j)->getY() << " " << endl;
-							cout << "walls with coords " << walls.at(i)->getStartX() << " " << walls.at(i)->getStartY() << " " << walls.at(i)->getEndX() << " " << walls.at(i)->getEndY() << endl;
-						}
-						if (NearTheWall((walls.at(i)), bullets.at(j)->getCurrentPosition(time)))
-						{
+							
 							cout << "Near the wall" << endl;
-							bullets.at(j)->Richochet(walls.at(i), bullets.at(j)->getBullet());
+							bullets.at(j)->Richochet(*i, bullets.at(j)->getBullet());
+
+							vector <Bullet*> ::iterator iter;
+							iter = bullets.begin() + j;
+							delete *iter;
 							cout << "ricosheted to pos" << bullets.at(j)->getDirX() << " " << bullets.at(j)->getDirY() << endl;
 							bullets.erase(bullets.begin() + j);
 							vector<Bullet*>(bullets).swap(bullets);
-							cout << "deleted bullet " << endl;
-							cout << "size bullets " << bullets.size() << endl;
-							walls.erase(walls.begin() + i);
-							vector<Wall*>(walls).swap(walls);
-							cout << "deleted wall " << endl;
-							for (unsigned int i = 0; i < walls.size(); ++i)
-							{
-								cout << walls.at(i)->getStartX() << " " << walls.at(i)->getStartY() << endl;
-							}
+							delete * i;
+							walls.erase(i);
+							list<Wall*>(walls).swap(walls);
+							//i = 0;
+							i = walls.begin();
+							 j = 0;
+							Sleep(3000);
 						}
 					}
 					else
 					{
+						vector <Bullet*> ::iterator iter;
+						iter = bullets.begin() + j;
+						delete *iter;
 						bullets.erase(bullets.begin() + j);
 						vector<Bullet*>(bullets).swap(bullets);
 						cout << "life_end" << endl;
 					}
 				}
 			}
+		
+		}
 	}
-	else cout << "no bullets " << endl;
+	else
+	{
+		Over = true;
+		cout << "no bullets " << endl;
+	}
 	g_lock.unlock();
 }
 
