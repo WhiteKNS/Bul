@@ -48,9 +48,13 @@ int main()
 	}
 	
 
-	for (auto& th : threads) th.join();
+	for (auto& th : threads)
+	{
+		if (th.joinable()) th.join();
+	}
 
 	float timer = 1.0f;
+
 	while (true)
 	{
 		manager.Update(timer++);
@@ -58,6 +62,21 @@ int main()
 		Sleep(10);
 		if (manager.Over) break;
 	}
+
+	for (list <Wall*> ::iterator iter = walls.begin(); iter != walls.end(); ++iter)
+	{
+		try
+		{
+			if (*iter != NULL)
+				delete *iter;
+		}
+		catch (exception e)
+		{
+			cout << " " << e.what() << endl;
+		}
+		
+	}
+	walls.clear();
 
 	return 0;
 }
