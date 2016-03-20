@@ -16,14 +16,17 @@ void FuncThread(BulletManager &man, float2 &pos, float2 &dir)
 	//float2 point(30, 0);
 	//float2 point2(60, 80);
 	//float2 dir(1, 4);
-	man.Fire(pos, dir, 1.0f, 0.5f, 6.0f);
+	//float speed = (10.0f * rand()) / RAND_MAX,
+		float time = (5.0f * rand()) / RAND_MAX,
+		time_life= (30.0f * rand()) / RAND_MAX;
+	man.Fire(pos, dir, 1.0f, time, time_life);
 }
 
 int main()
 {
-	float2 point(30, 0);
+	//float2 point(30, 0);
 	float2 point2(60, 80);
-	float2 dir(1, 4);
+	//float2 dir(1, 4);
 	//Bullet *bullet = new Bullet(point);
 	vector<Wall*>walls;
 	//vector<Bullet*>bullets;
@@ -37,8 +40,14 @@ int main()
 
 	BulletManager manager(walls); 
 
-	threads.push_back(thread(FuncThread, ref(manager), ref(point), ref(dir)));
-	
+	for (unsigned int i = 0; i < 5; ++i)
+	{
+		float2 point((100.0f * rand()) / RAND_MAX, (100.0f * rand()) / RAND_MAX);
+		//cout << "point created " << point.getX() << " " << point.getY() << endl;
+		float2 dir((100.0f * rand()) / RAND_MAX, (100.0f * rand()) / RAND_MAX);
+	//	cout << "dir created " << dir.getX() << " " << dir.getY() << endl;
+		threads.push_back(thread(FuncThread, ref(manager), ref(point), ref(dir)));
+	}
 	std::cout << "synchronizing all threads...\n";
 	for (auto& th : threads) th.join();
 	//manager->Fire(point, dir, 1.0f, 0.1f, 6.0f);

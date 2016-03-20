@@ -1,4 +1,7 @@
 #include "BulletManager.h"
+#include <mutex>
+
+mutex g_lock;
 
 BulletManager::BulletManager(vector<Wall*> walls) : walls(walls) {}
 
@@ -9,13 +12,21 @@ BulletManager::~BulletManager()
 
 void BulletManager::Fire(float2 pos, float2 dir, float speed, float time, float life_time)
 {
+	g_lock.lock();
 	bullets.push_back(new Bullet(pos, dir, speed, time, life_time));
+	cout << "entered thread " << this_thread::get_id() << endl;
+	//this_thread::sleep_for(chrono::seconds(rand() % 10));
+	cout << "leaving thread " << this_thread::get_id() << endl;
+	g_lock.unlock();
 }
 
 void BulletManager::Update(float time)
 {
 	cout << "time " <<time<< endl;
 	//cout << "life_time " <<bullets.at(0)->getLifeTime()<< endl;
+
+	g_lock.lock();
+	cout << "entered thread " << this_thread::get_id() << std::endl;
 	cout << "size bullets " << bullets.size() << endl;
 	if (!bullets.empty() && !walls.empty())
 	{
@@ -38,6 +49,7 @@ void BulletManager::Update(float time)
 							bullets.erase(bullets.begin() + j);
 							vector<Bullet*>(bullets).swap(bullets);
 							cout << "deleted bullet " << endl;
+							cout << "size bullets " << bullets.size() << endl;
 							walls.erase(walls.begin() + i);
 							vector<Wall*>(walls).swap(walls);
 							cout << "deleted wall " << endl;
@@ -57,6 +69,7 @@ void BulletManager::Update(float time)
 			}
 	}
 	else cout << "no bullets " << endl;
+	g_lock.unlock();
 }
 
 bool BulletManager::isIntersect(Wall *wall, float2 bullet)
