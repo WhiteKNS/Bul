@@ -11,6 +11,13 @@
 
 using namespace std;
 
+void FuncThread(BulletManager &man, float2 &pos, float2 &dir)
+{
+	//float2 point(30, 0);
+	//float2 point2(60, 80);
+	//float2 dir(1, 4);
+	man.Fire(pos, dir, 1.0f, 0.5f, 6.0f);
+}
 
 int main()
 {
@@ -19,46 +26,32 @@ int main()
 	float2 dir(1, 4);
 	//Bullet *bullet = new Bullet(point);
 	vector<Wall*>walls;
-	vector<Bullet*>bullets;
+	//vector<Bullet*>bullets;
 	//bullets.push_back(new Bullet(point));
 	walls.push_back(new Wall(new float2(0, 0), new float2(0,100)));
 	walls.push_back(new Wall(new float2(0, 100), new float2(100, 100)));
 	walls.push_back(new Wall(new float2(100, 100), new float2(100, 0)));
 	walls.push_back(new Wall(new float2(100, 0), new float2(0, 0)));
-/*
-	if (_kbhit())
-	{
-		switch (_getch())
-		{
-		case '1': 
-			
-			bullets.push_back(new Bullet(point_shoot));
-			break;
-		default: break;
-		}
-	}
-	*/
-	BulletManager *manager = new BulletManager(walls);
 
-	manager->Fire(point, dir, 1.0f, 0.1f, 6.0f);
-	manager->Fire(point2, dir, 3.0f, 1.0f, 6.0f);
-	//while(true)
+	vector<thread> threads;
+
+	BulletManager manager(walls); 
+
+	threads.push_back(thread(FuncThread, ref(manager), ref(point), ref(dir)));
+	
+	std::cout << "synchronizing all threads...\n";
+	for (auto& th : threads) th.join();
+	//manager->Fire(point, dir, 1.0f, 0.1f, 6.0f);
+	//manager->Fire(point2, dir, 3.0f, 1.0f, 6.0f);
+
 	float time = 0.0f;
 	while (true)
 	{
-		manager->Update(time++);
+		manager.Update(time++);
+
 		Sleep(1000);
 	}
-	delete manager;
-	/*
-	for (unsigned int i = 0; i < walls.size(); ++i)
-		for (unsigned int j = 0; j < bullets.size(); ++j)
-		{
-			{
-				BulletManager::isIntersect(walls.at(i), bullets.at(j)->getBullet());
-			}
-		}
-		*/
+
 	return 0;
 }
 
