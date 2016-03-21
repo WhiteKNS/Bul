@@ -17,7 +17,7 @@ void FuncThread(BulletManager &man, float2 &pos, float2 &dir, float speed, float
 	man.Fire(pos, dir, speed, time, life_time);
 }
 
-void Randomization(float &speed, float &time, float &life_time)
+void Randomization(float &speed, float &time, float &life_time) //randomization of float numbers
 {
 		speed = (10.0f * rand()) / RAND_MAX,
 		time = (5.0f * rand()) / RAND_MAX,
@@ -30,7 +30,7 @@ int main()
 	
 	list<Wall*>walls;
 
-	for (unsigned int i = 0; i < 20; ++i)
+	for (unsigned int i = 0; i < 20; ++i) //creating walls
 	{
 		float2 pos_first(100.0f * rand() / RAND_MAX, 100.0f * rand() / RAND_MAX);
 		float2 pos_second(100.0f * rand() / RAND_MAX, 100.0f * rand() / RAND_MAX);
@@ -41,7 +41,7 @@ int main()
 
 	BulletManager manager(walls); 
 
-	for (unsigned int i = 0; i < 25; ++i)
+	for (unsigned int i = 0; i < 10; ++i)
 	{
 		
 		float2 point((100.0f * rand()) / RAND_MAX, (100.0f * rand()) / RAND_MAX);
@@ -79,29 +79,11 @@ int main()
 void Function(int &a)
 {
 	ostringstream oss;
-	oss << "Function 1 " << " We're in the Fucn 1 ";
+	oss << "Function  " << "  ";
 	string str = oss.str();
 	cout << str << endl;
 	a++;
 }
-
-void Function2()
-{
-	cout << "Function 2 ";
-	cout<<" In the Func 2 " << endl;
-}
-
-int main()
-{
-	
-	int a = 4;
-	thread th(Function, ref(a));
-	thread th2(Function2);
-	cout << a << " ";
-	if (th2.joinable()) th2.join();
-	if (th.joinable()) th.join();
-	cout << a << " ";
-	return 0;
 }
 */
 

@@ -21,7 +21,7 @@ BulletManager::~BulletManager()
 void BulletManager::Fire(float2 pos, float2 dir, float speed, float time, float life_time)
 {
 	g_lock.lock();
-	bullets.push_back(new Bullet(pos, dir, speed, time, life_time));
+	bullets.push_back(new Bullet(pos, dir, speed, time, life_time)); //add all bullets to the vector
 	//cout << "entered thread " << this_thread::get_id() << endl;
 	//this_thread::sleep_for(chrono::seconds(rand() % 10));
 	//cout << "leaving thread " << this_thread::get_id() << endl;
@@ -40,7 +40,7 @@ void BulletManager::Update(float time)
 			for (unsigned int j = 0; j < bullets.size(); ++j)
 			{
 				{
-					if (time < bullets.at(j)->getLifeTime())
+					if (time < bullets.at(j)->getLifeTime())//check if  the time has run out
 					{
 						if (NearTheWall((*i), bullets.at(j)->getCurrentPosition(time))&&!NotPlane(*i, bullets.at(j), time))
 						{
@@ -68,7 +68,7 @@ void BulletManager::Update(float time)
 					}
 					else
 					{
-						vector <Bullet*> ::iterator iter;
+						vector <Bullet*> ::iterator iter;// if life time of the bullet is over
 						iter = bullets.begin() + j;
 						delete *iter;
 						bullets.erase(bullets.begin() + j);
@@ -100,13 +100,13 @@ bool BulletManager::NearTheWall(Wall *wall, float2 bullet)
 	float right_length = float2::getLength(wall->getEnd(), bullet);
 
 	float total_length = (wall_length + right_length + left_length)/2;
-	//the highth of the triangle from the bullet to the wall is the nearest distant to the wall
+	//the highth of the triangle, from the bullet to the wall, is the nearest distantion to the wall
 
 	return 2 * sqrt(total_length*(total_length - wall_length)*(total_length - left_length)*(total_length - right_length)) / wall_length <= COLLISION;
 }
 
 
-bool BulletManager::NotPlane(Wall *wall, Bullet* bullet, float time)
+bool BulletManager::NotPlane(Wall *wall, Bullet* bullet, float time) //check whether the bullet and the wall is on one line
 {
 	
 	//if ((wall->getEndX() - wall->getStartX() == wall->getEndY() - wall->getStartY()) && (wall->getEndX() - bullet->getCurrentPosition(time).getX() == wall->getEndY() - bullet->getCurrentPosition(time).getY())) return true;
