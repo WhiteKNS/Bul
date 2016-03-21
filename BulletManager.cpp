@@ -40,8 +40,6 @@ void BulletManager::Update(float time)
 			for (unsigned int j = 0; j < bullets.size(); ++j)
 			{
 				{
-					//MoveToEx(hDC, bullets.at(j)->getCurrentPosition(time).getX(), bullets.at(j)->getCurrentPosition(time).getY(), NULL);
-					//LineTo(hDC, bullets.at(j)->getCurrentPosition(time).getX(), bullets.at(j)->getCurrentPosition(time).getY()+0.5);
 					if (time < bullets.at(j)->getLifeTime())
 					{
 						if (NearTheWall((*i), bullets.at(j)->getCurrentPosition(time))&&!NotPlane(*i, bullets.at(j), time))
