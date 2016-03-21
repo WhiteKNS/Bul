@@ -30,10 +30,10 @@ int main()
 	
 	list<Wall*>walls;
 
-	for (unsigned int i = 0; i < 25; ++i)
+	for (unsigned int i = 0; i < 20; ++i)
 	{
 		float2 pos_first(100.0f * rand() / RAND_MAX, 100.0f * rand() / RAND_MAX);
-		float2 pos_second(150.0f * rand() / RAND_MAX, 150.0f * rand() / RAND_MAX);
+		float2 pos_second(100.0f * rand() / RAND_MAX, 100.0f * rand() / RAND_MAX);
 		walls.push_back(new Wall(pos_first, pos_second));
 	}
 
