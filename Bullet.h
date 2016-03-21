@@ -28,10 +28,10 @@ public:
 	float getY();
 
 	void SetBullet(float2 bullet);
-	float2 getBullet();
+	const float2 getBullet();
 	float2 getCurrentPosition(float cur_time);
 	float2 Richochet(Wall *wall, float2 bullet);
-	float2 getDir();
+	const float2 getDir();
 
 	const float getLifeTime();
 };

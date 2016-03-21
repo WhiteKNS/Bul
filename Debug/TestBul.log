@@ -1,8 +1,8 @@
-﻿Build started 3/21/2016 2:59:40 AM.
+﻿Build started 3/21/2016 3:46:49 AM.
      1>Project "C:\Users\NATALYA\documents\visual studio 2015\Projects\TestBul\TestBul\TestBul.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\Новая папка\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt BulletManager.cpp
-         BulletManager.cpp
+         D:\Новая папка\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
+         Main.cpp
      1>d:\новая папка\vc\include\xutility(3630): warning C4566: character represented by universal-character-name '\u043D' cannot be represented in the current code page (1252)
      1>d:\новая папка\vc\include\xutility(3630): warning C4566: character represented by universal-character-name '\u043E' cannot be represented in the current code page (1252)
      1>d:\новая папка\vc\include\xutility(3630): warning C4566: character represented by universal-character-name '\u0432' cannot be represented in the current code page (1252)
@@ -56,4 +56,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:05.58
+Time Elapsed 00:00:03.62

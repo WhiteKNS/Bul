@@ -8,13 +8,16 @@
 #include <list>
 #include <iostream>
 #include <cmath>
+#include <mutex>
+#include <Windows.h>
 
-#define COLLISION 0.1
+#define COLLISION 0.05
 
 using namespace std;
 
 class BulletManager
 {
+	
 	list<Wall*> walls;
 	vector <Bullet*> bullets;
 

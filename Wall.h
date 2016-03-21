@@ -12,10 +12,10 @@ public:
 	Wall(float2 start_point, float2 end_point);
 	~Wall();
 
-	float2 getStart();
-	float2 getEnd();
-	float getStartX();
-	float getStartY();
-	float getEndX();
-	float getEndY();
+	const float2 getStart();
+	const float2 getEnd();
+	const float getStartX();
+	const float getStartY();
+	const float getEndX();
+	const float getEndY();
 };

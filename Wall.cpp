@@ -7,37 +7,35 @@ Wall::Wall(float2 start_point, float2 end_point):start_point(start_point), end_p
 
 Wall::~Wall()
 {
-	//delete start_point;
-	//delete end_point;
 }
 
 
-float2 Wall::getStart()
+const float2 Wall::getStart()
 {
 	return start_point;
 }
 
-float2 Wall::getEnd()
+const float2 Wall::getEnd()
 {
 	return end_point;
 }
 
-float Wall::getStartX()
+const float Wall::getStartX()
 {
 	return start_point.getX();
 }
 
-float Wall::getStartY()
+const float Wall::getStartY()
 {
 	return start_point.getY();
 }
 
-float Wall::getEndX()
+const float Wall::getEndX()
 {
 	return end_point.getX();
 }
 
-float Wall::getEndY()
+const float Wall::getEndY()
 {
 	return end_point.getY();
 }

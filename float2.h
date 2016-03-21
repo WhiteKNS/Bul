@@ -14,8 +14,8 @@ public:
 	~float2();
 	float2 operator+(const float2& rv);
 
-	float getX();
-	float getY();
+	const float getX();
+	const float getY();
 
 	void setX(float X);
 	void setY(float Y);

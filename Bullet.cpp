@@ -34,7 +34,7 @@ void Bullet::SetBullet(float2 bullet)
 	this->pos = bullet;
 }
 
-float2 Bullet::getBullet()
+const float2 Bullet::getBullet()
 {
 	return pos;
 }
@@ -68,7 +68,7 @@ float2 Bullet::Richochet(Wall *wall, float2 bullet)
 	return dir;
 }
 
-float2 Bullet::getDir()
+const float2 Bullet::getDir()
 {
 	return dir;
 }

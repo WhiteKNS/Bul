@@ -6,12 +6,12 @@ float2::~float2() {}
 
 float2::float2():X(0),Y(0) {}
 
-float float2::getX()
+const float float2::getX()
 {
 	return X;
 }
 
-float float2::getY()
+const float float2::getY()
 {
 	return Y;
 }

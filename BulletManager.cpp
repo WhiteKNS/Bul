@@ -1,6 +1,5 @@
 #include "BulletManager.h"
-#include <mutex>
-#include <Windows.h>
+
 
 mutex g_lock;
 
@@ -33,7 +32,7 @@ void BulletManager::Update(float time)
 {
 	Over = false;
 	g_lock.lock();
-
+	
 	if (!bullets.empty() && !walls.empty())
 	{
 		for (list<Wall*>::iterator i = walls.begin(); i != walls.end(); i++)
@@ -41,13 +40,12 @@ void BulletManager::Update(float time)
 			for (unsigned int j = 0; j < bullets.size(); ++j)
 			{
 				{
+					//MoveToEx(hDC, bullets.at(j)->getCurrentPosition(time).getX(), bullets.at(j)->getCurrentPosition(time).getY(), NULL);
+					//LineTo(hDC, bullets.at(j)->getCurrentPosition(time).getX(), bullets.at(j)->getCurrentPosition(time).getY()+0.5);
 					if (time < bullets.at(j)->getLifeTime())
 					{
-						//float2 cur_pos = bullets.at(j)->getCurrentPosition(time);
 						if (NearTheWall((*i), bullets.at(j)->getCurrentPosition(time))&&!NotPlane(*i, bullets.at(j), time))
-
 						{
-							
 							cout << "Near the wall" << endl;
 							Wall *wall = *i;
 							cout <<bullets.at(j)->getCurrentPosition(time).getX()<<" "<< bullets.at(j)->getCurrentPosition(time).getY() <<"wall "<<wall->getStartX()<<" "<<wall->getStartY()<<" "<< wall->getEndX() << " " << wall->getEndY() << endl;
@@ -63,11 +61,9 @@ void BulletManager::Update(float time)
 							vector<Bullet*>(bullets).swap(bullets);
 		
 							walls.erase(i);
-						//	cout << "1" << endl;
 							list <Wall*>(walls).swap(walls);
 							
 							i = walls.begin();
-						//	cout << "2" << endl;
 							 j = 0;
 							//Sleep(3000);
 						}

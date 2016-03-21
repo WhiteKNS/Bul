@@ -21,7 +21,7 @@ void Randomization(float &speed, float &time, float &life_time)
 {
 		speed = (10.0f * rand()) / RAND_MAX,
 		time = (5.0f * rand()) / RAND_MAX,
-		life_time = (30.0f * rand()) / RAND_MAX+ 10.0f;
+		life_time = (20.0f * rand()) / RAND_MAX+ 10.0f;
 }
 
 int main()
@@ -29,11 +29,11 @@ int main()
 	srand((unsigned)time(NULL));
 	
 	list<Wall*>walls;
-	
-	for (unsigned int i = 0; i < 20; ++i)
+
+	for (unsigned int i = 0; i < 25; ++i)
 	{
 		float2 pos_first(100.0f * rand() / RAND_MAX, 100.0f * rand() / RAND_MAX);
-		float2 pos_second(100.0f * rand() / RAND_MAX, 100.0f * rand() / RAND_MAX);
+		float2 pos_second(150.0f * rand() / RAND_MAX, 150.0f * rand() / RAND_MAX);
 		walls.push_back(new Wall(pos_first, pos_second));
 	}
 
@@ -43,6 +43,7 @@ int main()
 
 	for (unsigned int i = 0; i < 25; ++i)
 	{
+		
 		float2 point((100.0f * rand()) / RAND_MAX, (100.0f * rand()) / RAND_MAX);
 		float2 dir((3.0f * rand()) / RAND_MAX, (4.0f * rand()) / RAND_MAX);
 		float speed, time, life_time;
@@ -62,7 +63,7 @@ int main()
 	{
 		manager.Update(timer++);
 
-		Sleep(10);
+		Sleep(1000);
 		if (manager.Over) break;
 	}
 
