@@ -22,7 +22,6 @@ BulletManager::~BulletManager()
 void BulletManager::Fire(float2 pos, float2 dir, float speed, float time, float life_time)
 {
 	g_lock.lock();
-	//cout << "speed" << speed << " time " << time << " life time" << life_time << endl;
 	bullets.push_back(new Bullet(pos, dir, speed, time, life_time));
 	//cout << "entered thread " << this_thread::get_id() << endl;
 	//this_thread::sleep_for(chrono::seconds(rand() % 10));
@@ -42,30 +41,35 @@ void BulletManager::Update(float time)
 			for (unsigned int j = 0; j < bullets.size(); ++j)
 			{
 				{
-					//cout << walls.size() << " " << bullets.size() << " i " << i << " j " << j << endl;
 					if (time < bullets.at(j)->getLifeTime())
 					{
-						
-						if (NearTheWall((*i), bullets.at(j)->getCurrentPosition(time)))
+						//float2 cur_pos = bullets.at(j)->getCurrentPosition(time);
+						if (NearTheWall((*i), bullets.at(j)->getCurrentPosition(time))&&!NotPlane(*i, bullets.at(j), time))
 
 						{
 							
 							cout << "Near the wall" << endl;
-							bullets.at(j)->Richochet(*i, bullets.at(j)->getBullet());
+							Wall *wall = *i;
+							cout <<bullets.at(j)->getCurrentPosition(time).getX()<<" "<< bullets.at(j)->getCurrentPosition(time).getY() <<"wall "<<wall->getStartX()<<" "<<wall->getStartY()<<" "<< wall->getEndX() << " " << wall->getEndY() << endl;
+							//delete wall;
+							float2 richochet = bullets.at(j)->Richochet(*i, bullets.at(j)->getBullet());
 
 							vector <Bullet*> ::iterator iter;
 							iter = bullets.begin() + j;
 							delete *iter;
-							cout << "ricosheted to pos" << bullets.at(j)->getDirX() << " " << bullets.at(j)->getDirY() << endl;
+
+							cout << "ricosheted to pos" << richochet.getX() << " " << richochet.getY() << endl;
 							bullets.erase(bullets.begin() + j);
 							vector<Bullet*>(bullets).swap(bullets);
-							delete * i;
+		
 							walls.erase(i);
-							list<Wall*>(walls).swap(walls);
-							//i = 0;
+						//	cout << "1" << endl;
+							list <Wall*>(walls).swap(walls);
+							
 							i = walls.begin();
+						//	cout << "2" << endl;
 							 j = 0;
-							Sleep(3000);
+							//Sleep(3000);
 						}
 					}
 					else
@@ -107,6 +111,14 @@ bool BulletManager::NearTheWall(Wall *wall, float2 bullet)
 	return 2 * sqrt(total_length*(total_length - wall_length)*(total_length - left_length)*(total_length - right_length)) / wall_length <= COLLISION;
 }
 
+
+bool BulletManager::NotPlane(Wall *wall, Bullet* bullet, float time)
+{
+	
+	//if ((wall->getEndX() - wall->getStartX() == wall->getEndY() - wall->getStartY()) && (wall->getEndX() - bullet->getCurrentPosition(time).getX() == wall->getEndY() - bullet->getCurrentPosition(time).getY())) return true;
+	if (float2::getLength(bullet->getCurrentPosition(time), wall->getStart()) > float2::getLength(wall->getStart(), wall->getEnd()) || float2::getLength(bullet->getCurrentPosition(time), wall->getEnd()) > float2::getLength(wall->getStart(), wall->getEnd())) return true;
+	return false;
+}
 
 
 

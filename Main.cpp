@@ -29,9 +29,12 @@ int main()
 	srand((unsigned)time(NULL));
 	
 	list<Wall*>walls;
+	
 	for (unsigned int i = 0; i < 20; ++i)
 	{
-		walls.push_back(new Wall(new float2((100.0f * rand()) / RAND_MAX, (100.0f * rand()) / RAND_MAX), new float2((100.0f * rand()) / RAND_MAX, (100.0f * rand()) / RAND_MAX)));
+		float2 pos_first(100.0f * rand() / RAND_MAX, 100.0f * rand() / RAND_MAX);
+		float2 pos_second(100.0f * rand() / RAND_MAX, 100.0f * rand() / RAND_MAX);
+		walls.push_back(new Wall(pos_first, pos_second));
 	}
 
 	vector<thread> threads;
@@ -63,19 +66,7 @@ int main()
 		if (manager.Over) break;
 	}
 
-	for (list <Wall*> ::iterator iter = walls.begin(); iter != walls.end(); ++iter)
-	{
-		try
-		{
-			if (*iter != NULL)
-				delete *iter;
-		}
-		catch (exception e)
-		{
-			cout << " " << e.what() << endl;
-		}
-		
-	}
+	
 	walls.clear();
 
 	return 0;

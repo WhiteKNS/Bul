@@ -1,6 +1,9 @@
 #pragma once
 #include "float2.h"
+#include <iostream>
 #include "Wall.h"
+
+using namespace std;
 
 class Bullet
 {
@@ -28,8 +31,7 @@ public:
 	float2 getBullet();
 	float2 getCurrentPosition(float cur_time);
 	float2 Richochet(Wall *wall, float2 bullet);
-	float getDirX();
-	float getDirY();
+	float2 getDir();
 
 	const float getLifeTime();
 };

@@ -42,9 +42,10 @@ float2 Bullet::getBullet()
 float2 Bullet::getCurrentPosition(float cur_time)
 {
 	float2 cur_position;
+
 	cur_position.setX(pos.getX() + cur_time*speed*cos_angle);
 	cur_position.setY(pos.getY() + cur_time*speed* sin_angle);
-
+	
 	return cur_position;
 }
 
@@ -62,16 +63,12 @@ float2 Bullet::Richochet(Wall *wall, float2 bullet)
 	float angle = (powf(wall_length, 2) - powf(left_length, 2) + powf(right_length, 2)) / (2 * wall_length*right_length);
 	dir.setX(-(dir.getX()*cos(180 - angle) - dir.getY()*cos(180 - angle))); //new direction (the reflection of the angle)
 	dir.setY(-(dir.getX()*cos(180 - angle) + dir.getY()*cos(180 - angle)));
+
+
 	return dir;
 }
 
-
-float Bullet::getDirX()
+float2 Bullet::getDir()
 {
-	return dir.getX();
-}
-
-float Bullet::getDirY()
-{
-	return dir.getY();
+	return dir;
 }

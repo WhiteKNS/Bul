@@ -20,6 +20,7 @@ class BulletManager
 
 	bool isIntersect(Wall *wall, float2 bullet);
 	bool NearTheWall(Wall *wall, float2 bullet);
+	bool NotPlane(Wall *wall, Bullet *bullet, float time);
 
 public:
 

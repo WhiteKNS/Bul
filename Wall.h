@@ -4,12 +4,12 @@
 
 class Wall
 {
-	float2 *start_point;
-	float2 *end_point;
+	float2 start_point;
+	float2 end_point;
 
 public:
 
-	Wall(float2 *start_point, float2 *end_point);
+	Wall(float2 start_point, float2 end_point);
 	~Wall();
 
 	float2 getStart();
